@@ -1,0 +1,86 @@
+.app {
+    text-align: center;
+    padding: 20px;    
+    min-height: 100vh;
+    background-color: black;
+  }
+  
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    height: 80px;
+    max-width: 300px;
+    margin: auto;
+  }
+
+  .inputname {
+    padding: 8px;
+  }
+
+  .addplayer {
+    margin-top: 10px;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    color: white;
+    padding: 10px;
+    margin: 10px;
+    max-width: 125px;
+    text-align: center;
+    position: relative;
+    background-image: url('../../../towefall.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  }
+  .resta {
+    background-color: #ff3c00;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+
+  .name {
+    text-transform: capitalize;
+  }
+
+  .puntos {
+    font-weight: 700;
+    text-transform: uppercase;
+    /* position: absolute; */
+    font-size: 25px;
+    /* top: -25px; */
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    background-color: black;
+    border-radius: 50%;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
