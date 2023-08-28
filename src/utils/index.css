@@ -1,0 +1,8 @@
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: 140px; /* Ajusta esto según tus necesidades */
+   
+  }

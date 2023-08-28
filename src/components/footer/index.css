@@ -1,0 +1,52 @@
+.content-footer {
+    position: relative;
+    bottom: 0px;
+    left: 0;
+    padding: 10px;
+    /* margin: auto; */
+    right: 0;
+    border-radius: 5px;
+    /* display: flex; */
+    /* border: 2px solid hsl(240deg 7% 97%); */
+    opacity: 0.9;
+    /* justify-content: space-around; */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 700px;
+    margin: auto;
+  }
+  
+  @media(max-width:425px) {
+    .content-footer {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    .content-icons {
+      margin-bottom: 5px;
+    }
+  }
+  
+  .content-icons {
+    margin-top: 5px;
+  }
+  
+  .icon-footer {
+    width: 30px;
+    height: 30px;
+  }
+  .git {
+    width: 25px;
+    height: 25px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+  }
+  
+  .footer-link {
+    text-decoration: none;
+    text-decoration: none;
+    color: rgb(237 237 237);
+    font-weight: 700;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+  
