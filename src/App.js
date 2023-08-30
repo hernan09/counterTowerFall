@@ -80,9 +80,8 @@ function App() {
         </div>
         <div className="separador"></div>
         <div className="content-subform">
-          {!loading && <div className="content-polices">
-              verifica en que aplicacion podras ver tu pelicula o serie favorita :D
-            </div>}
+          {<div className="content-polices">
+            Puedes ver tus series y peliculas favoritas en estos servicios</div>}
           {loading ? ( // Renderizar el spinner si está cargando
             <div className="spinner">
               {<LoadingSpinner/>}
