@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from './components/footer/footer.jsx';
 import LoadingSpinner from './utils/spiner.jsx';
 import "./App.css";
@@ -7,7 +7,9 @@ import "./App.css";
 function App() {
   const [title, setTitle] = useState("");
   const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false); // Estado de carga
+  const [loading, setLoading] = useState(false); 
+  const [letterFlag, setLetterFlag] = useState(true) // Estado de carga
+  const [classCard , setClassCard] = useState('hidden');
 
   const url = `https://streaming-availability.p.rapidapi.com/search/title?title=${title}&country=us&show_type=all&output_language=en`;
   const options = {
@@ -18,6 +20,10 @@ function App() {
     },
   };
 
+  useEffect(()=>{
+    handleAnimation()
+  },[])
+
   const handleSearch = async () => {
     try {
       setLoading(true); // Comenzar la carga
@@ -26,17 +32,31 @@ function App() {
       console.log(data);
       
       if (data.result.length > 0) {
-        setResults(data.result.slice(0, 3)); // Mostrar los primeros 3 resultados
+        setResults(data.result.slice(0, 6)); // Mostrar los primeros 3 resultados
+      } else if (data.result.length === 0) {
+        setResults([]);
+        setLetterFlag(true)
       } else {
         setResults([]); // No se encontraron resultados
+        setLetterFlag(true)
       }
   
       setLoading(false); // Finalizar la carga
+      setLetterFlag(false);
+
     } catch (error) {
       console.error(error);
-      setLoading(false); // Finalizar la carga en caso de error
+      setLoading(false); 
+      setLetterFlag(true) // Finalizar la carga en caso de error
     }
   };
+
+  const handleAnimation = () => {       
+    if (document.documentElement.scrollTop > 10) { 
+       console.log('el scroll',document.documentElement.scrollTop);          
+       setClassCard('visible');
+   };
+  }
 
   const getServiceIconPath = (serviceName) => {
     // Asigna nombres de servicios a las rutas de las imágenes
@@ -80,9 +100,9 @@ function App() {
         </div>
         <div className="separador"></div>
         <div className="content-subform">
-          {<div className="content-polices">
+          {letterFlag && <div className="content-polices">
             Puedes ver tus series y peliculas favoritas en estos servicios</div>}
-          {loading ? ( // Renderizar el spinner si está cargando
+          {loading && letterFlag ? ( // Renderizar el spinner si está cargando
             <div className="spinner">
               {<LoadingSpinner/>}
             </div>
@@ -90,7 +110,7 @@ function App() {
             results
               ?.filter((result) => result?.streamingInfo?.us?.length > 0)
               .map((result, index) => (
-                <div key={index} className="content-card">
+                <div key={index} className={`content-card ${classCard}`}>
                   <h2 className="tittle">{result.title}</h2>
                   <span className="span-text">Puedes verla en estos servicios</span>
                   <div className="data-movie">
@@ -110,6 +130,7 @@ function App() {
                       </span>
                     ))}
                   </div>
+                  <div className="footer-card"></div>
                 </div>
               ))
           )}
