@@ -17,6 +17,7 @@
   background-color: white;
   top: 0;
   border-bottom-right-radius: 100%;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 .content-main {
   min-height: 80vh;
@@ -38,6 +39,7 @@
   align-items: center;
   border-bottom-right-radius: 100%;
   border-top-left-radius: 100%;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 .content-form {
   display: flex;
@@ -106,6 +108,28 @@
   align-items: center;
   text-align: center;
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.content-card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /*** ESTILOS BOTÓN GROW SKEW ***/
@@ -200,10 +224,6 @@
   border-top-left-radius: 100%;
   border-top-right-radius: 100%;
   bottom: 0;
-}
-
-.hidden {
-  
 }
 
 .visible {

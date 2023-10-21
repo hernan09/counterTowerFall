@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { Fade } from "react-reveal"; // Importa la animación Fade
 import Footer from './components/footer/footer.jsx';
 import LoadingSpinner from './utils/spiner.jsx';
+import { InView } from 'react-intersection-observer';
 import "./App.css";
 //import Counter from './components/counters/index.jsx';
 
 function App() {
   const [title, setTitle] = useState("");
   const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false); 
-  const [letterFlag, setLetterFlag] = useState(true) // Estado de carga
-  const [classCard , setClassCard] = useState('hidden');
+  const [loading, setLoading] = useState(false);
+  const [letterFlag, setLetterFlag] = useState(true); // Estado de carga
+  const [classCard, setClassCard] = useState('hidden');
 
   const url = `https://streaming-availability.p.rapidapi.com/search/title?title=${title}&country=us&show_type=all&output_language=en`;
   const options = {
@@ -20,9 +22,9 @@ function App() {
     },
   };
 
-  useEffect(()=>{
-    handleAnimation()
-  },[])
+  useEffect(() => {
+    handleAnimation();
+  }, []);
 
   const handleSearch = async () => {
     try {
@@ -30,33 +32,32 @@ function App() {
       const response = await fetch(url, options);
       const data = await response.json();
       console.log(data);
-      
+
       if (data.result.length > 0) {
         setResults(data.result.slice(0, 6)); // Mostrar los primeros 3 resultados
       } else if (data.result.length === 0) {
         setResults([]);
-        setLetterFlag(true)
+        setLetterFlag(true);
       } else {
         setResults([]); // No se encontraron resultados
-        setLetterFlag(true)
+        setLetterFlag(true);
       }
-  
+
       setLoading(false); // Finalizar la carga
       setLetterFlag(false);
-
     } catch (error) {
       console.error(error);
-      setLoading(false); 
-      setLetterFlag(true) // Finalizar la carga en caso de error
+      setLoading(false);
+      setLetterFlag(true); // Finalizar la carga en caso de error
     }
   };
 
-  const handleAnimation = () => {       
-    if (document.documentElement.scrollTop > 10) { 
-       console.log('el scroll',document.documentElement.scrollTop);          
-       setClassCard('visible');
-   };
-  }
+  const handleAnimation = () => {
+    if (document.documentElement.scrollTop > 10) {
+      console.log('el scroll', document.documentElement.scrollTop);
+      setClassCard('visible');
+    }
+  };
 
   const getServiceIconPath = (serviceName) => {
     // Asigna nombres de servicios a las rutas de las imágenes
@@ -68,11 +69,10 @@ function App() {
       hbo: "hbo.png",
       peacock: "peacock.png",
       disney: "disney.png",
-      paramount:"paramount.png",
-      showtime:"showtime.png"
+      paramount: "paramount.png",
+      showtime: "showtime.png"
       // Agrega más servicios aquí
     };
-    //https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGfyc7_VRUZRD4dPGHn2EWmSc7oxmAUIV5VsGPgrg-RJd0unQTdzTgYE_apnUIlZCaLGo&usqp=CAU
 
     const defaultIcon = ""; // Icono por defecto si no se encuentra el servicio
 
@@ -86,57 +86,59 @@ function App() {
       <div className="content-main">
         {/* <Counter></Counter> */}
         <div className="content-form">
-        <h1 className="principal-title">Buscador de Streaming</h1>
-        <input
-          type="text"
-          className="principal-input"
-          placeholder="Ingrese el título..."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <button className="ov-btn-grow-skew" onClick={handleSearch}>
-          Buscar
-        </button>
+          <h1 className="principal-title">Buscador de Streaming</h1>
+          <input
+            type="text"
+            className="principal-input"
+            placeholder="Ingrese el título..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <button className="ov-btn-grow-skew" onClick={handleSearch}>
+            Buscar
+          </button>
         </div>
         <div className="separador"></div>
         <div className="content-subform">
-          {letterFlag && <div className="content-polices">
-            Puedes ver tus series y peliculas favoritas en estos servicios</div>}
+          {<div className="content-polices">
+            Puedes ver tus series y películulas favoritas en estos servicios</div>}
           {loading && letterFlag ? ( // Renderizar el spinner si está cargando
             <div className="spinner">
-              {<LoadingSpinner/>}
+              {<LoadingSpinner />}
             </div>
           ) : (
             results
               ?.filter((result) => result?.streamingInfo?.us?.length > 0)
               .map((result, index) => (
-                <div key={index} className={`content-card ${classCard}`}>
-                  <h2 className="tittle">{result.title}</h2>
-                  <span className="span-text">Puedes verla en estos servicios</span>
-                  <div className="data-movie">
-                    {[
-                      ...new Set(
-                        result?.streamingInfo?.us?.map((item) => item.service)
-                      ),
-                    ].map((service, index) => (
-                      <span key={index} className="item-span">
-                        <img
-                          src={require(`./assets/icons/${getServiceIconPath(
-                            service
-                          )}`)}
-                          alt={`${service} Icon`}
-                          className="service-icon"
-                        />
-                      </span>
-                    ))}
+                <Fade key={index} duration={1000} delay={index * 200}>
+                  <div className={`content-card ${classCard}`}>
+                    <h2 className="tittle">{result.title}</h2>
+                    <span className="span-text">Puedes verla en estos servicios</span>
+                    <div className="data-movie">
+                      {[
+                        ...new Set(
+                          result?.streamingInfo?.us?.map((item) => item.service)
+                        ),
+                      ].map((service, index) => (
+                        <span key={index} className="item-span">
+                          <img
+                            src={require(`./assets/icons/${getServiceIconPath(
+                              service
+                            )}`)}
+                            alt={`${service} Icon`}
+                            className="service-icon"
+                          />
+                        </span>
+                      ))}
+                    </div>
+                    <div className="footer-card"></div>
                   </div>
-                  <div className="footer-card"></div>
-                </div>
+                </Fade>
               ))
           )}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
